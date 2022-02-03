@@ -9,12 +9,7 @@ const Post = ({ img, username, caption }) => {
         <h3>{username}</h3>
       </div>
 
-      <img
-        className="post_img"
-        src="https://avatars.githubusercontent.com/u/87361294?s=400&u=05e7fd06becf37bdcc0ad0b4f3fa88bdf1faa5a9&v=4"
-        alt=""
-        srcset=""
-      />
+      <img className="post_img" src={img} alt="" srcset="" />
       <h4 className="post_text">
         <strong>{username} </strong> {caption}
       </h4>

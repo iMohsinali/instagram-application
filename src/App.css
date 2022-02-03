@@ -8,3 +8,32 @@
   padding: 20px;
   border-bottom: 1px solid lightgray;
 }
+
+
+.app_signup{
+  display: flex;
+  flex-direction: column;
+}
+.container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.container :nth-child(1){
+  
+  text-align: center;
+ 
+  width: 100px;
+  height: 100px;
+  background-color: green;
+
+ 
+  padding-top:100px ;
+  margin-left:100px  ;
+  margin-right: 100px;
+  padding-right:50px ;
+  padding-left: 50px;
+  border-radius: 50%;
+  border: 2px solid black;
+}
