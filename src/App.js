@@ -1,7 +1,7 @@
 import "./App.css";
 import Post from "./Post";
 import { useEffect, useState } from "react";
-import { db } from "./firebase";
+import { auth, db } from "./firebase";
 import { Button, Modal } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
@@ -12,6 +12,17 @@ function App() {
   const [username, setusername] = useState([]);
   const [email, setEmail] = useState([]);
   const [password, setPassword] = useState([]);
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        console.log(authUser);
+      } else {
+        setUser(null);
+      }
+    });
+    return () => unsubscribe();
+  }, [user, username]);
   useEffect(() => {
     db.collection("posts").onSnapshot((snapshot) => {
       setpost(
@@ -49,6 +60,17 @@ function App() {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
+  const singup = (event) => {
+    event.preventDefault();
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((authUser) => {
+        return authUser.user.updateProfile({
+          displayName: username,
+        });
+      })
+      .catch((error) => alert(error.message));
+  };
   return (
     <div className="App">
       <Modal
@@ -85,7 +107,9 @@ function App() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Button onClick={() => setopen(true)}>Sign UP</Button>
+            <Button type="submit" onClick={singup}>
+              Sign UP
+            </Button>
           </form>
         </div>
       </Modal>
